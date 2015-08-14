@@ -1,0 +1,441 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6696406C1B7E75BE007C72AA /* AppDelegate.swift */; };
+		669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6696406E1B7E75BE007C72AA /* InstaVideo.xcdatamodeld */; };
+		669640721B7E75BE007C72AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669640711B7E75BE007C72AA /* ViewController.swift */; };
+		669640751B7E75BE007C72AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669640731B7E75BE007C72AA /* Main.storyboard */; };
+		669640771B7E75BE007C72AA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 669640761B7E75BE007C72AA /* Images.xcassets */; };
+		6696407A1B7E75BE007C72AA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669640781B7E75BE007C72AA /* LaunchScreen.xib */; };
+		669640861B7E75BF007C72AA /* InstaVideoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669640851B7E75BF007C72AA /* InstaVideoTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		669640801B7E75BF007C72AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6696405F1B7E75BE007C72AA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 669640661B7E75BE007C72AA;
+			remoteInfo = InstaVideo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		669640671B7E75BE007C72AA /* InstaVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6696406B1B7E75BE007C72AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6696406C1B7E75BE007C72AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6696406F1B7E75BE007C72AA /* InstaVideo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InstaVideo.xcdatamodel; sourceTree = "<group>"; };
+		669640711B7E75BE007C72AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		669640741B7E75BE007C72AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		669640761B7E75BE007C72AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		669640791B7E75BE007C72AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		6696407F1B7E75BF007C72AA /* InstaVideoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstaVideoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		669640841B7E75BF007C72AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		669640851B7E75BF007C72AA /* InstaVideoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstaVideoTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		669640641B7E75BE007C72AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6696407C1B7E75BF007C72AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6696405E1B7E75BE007C72AA = {
+			isa = PBXGroup;
+			children = (
+				669640691B7E75BE007C72AA /* InstaVideo */,
+				669640821B7E75BF007C72AA /* InstaVideoTests */,
+				669640681B7E75BE007C72AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		669640681B7E75BE007C72AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				669640671B7E75BE007C72AA /* InstaVideo.app */,
+				6696407F1B7E75BF007C72AA /* InstaVideoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		669640691B7E75BE007C72AA /* InstaVideo */ = {
+			isa = PBXGroup;
+			children = (
+				6696406C1B7E75BE007C72AA /* AppDelegate.swift */,
+				669640711B7E75BE007C72AA /* ViewController.swift */,
+				669640731B7E75BE007C72AA /* Main.storyboard */,
+				669640761B7E75BE007C72AA /* Images.xcassets */,
+				669640781B7E75BE007C72AA /* LaunchScreen.xib */,
+				6696406E1B7E75BE007C72AA /* InstaVideo.xcdatamodeld */,
+				6696406A1B7E75BE007C72AA /* Supporting Files */,
+			);
+			path = InstaVideo;
+			sourceTree = "<group>";
+		};
+		6696406A1B7E75BE007C72AA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6696406B1B7E75BE007C72AA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		669640821B7E75BF007C72AA /* InstaVideoTests */ = {
+			isa = PBXGroup;
+			children = (
+				669640851B7E75BF007C72AA /* InstaVideoTests.swift */,
+				669640831B7E75BF007C72AA /* Supporting Files */,
+			);
+			path = InstaVideoTests;
+			sourceTree = "<group>";
+		};
+		669640831B7E75BF007C72AA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				669640841B7E75BF007C72AA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		669640661B7E75BE007C72AA /* InstaVideo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 669640891B7E75BF007C72AA /* Build configuration list for PBXNativeTarget "InstaVideo" */;
+			buildPhases = (
+				669640631B7E75BE007C72AA /* Sources */,
+				669640641B7E75BE007C72AA /* Frameworks */,
+				669640651B7E75BE007C72AA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InstaVideo;
+			productName = InstaVideo;
+			productReference = 669640671B7E75BE007C72AA /* InstaVideo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6696407E1B7E75BF007C72AA /* InstaVideoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6696408C1B7E75BF007C72AA /* Build configuration list for PBXNativeTarget "InstaVideoTests" */;
+			buildPhases = (
+				6696407B1B7E75BF007C72AA /* Sources */,
+				6696407C1B7E75BF007C72AA /* Frameworks */,
+				6696407D1B7E75BF007C72AA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				669640811B7E75BF007C72AA /* PBXTargetDependency */,
+			);
+			name = InstaVideoTests;
+			productName = InstaVideoTests;
+			productReference = 6696407F1B7E75BF007C72AA /* InstaVideoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6696405F1B7E75BE007C72AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = Aphelion;
+				TargetAttributes = {
+					669640661B7E75BE007C72AA = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					6696407E1B7E75BF007C72AA = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 669640661B7E75BE007C72AA;
+					};
+				};
+			};
+			buildConfigurationList = 669640621B7E75BE007C72AA /* Build configuration list for PBXProject "InstaVideo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6696405E1B7E75BE007C72AA;
+			productRefGroup = 669640681B7E75BE007C72AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				669640661B7E75BE007C72AA /* InstaVideo */,
+				6696407E1B7E75BF007C72AA /* InstaVideoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		669640651B7E75BE007C72AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				669640751B7E75BE007C72AA /* Main.storyboard in Resources */,
+				6696407A1B7E75BE007C72AA /* LaunchScreen.xib in Resources */,
+				669640771B7E75BE007C72AA /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6696407D1B7E75BF007C72AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		669640631B7E75BE007C72AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				669640721B7E75BE007C72AA /* ViewController.swift in Sources */,
+				6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */,
+				669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6696407B1B7E75BF007C72AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				669640861B7E75BF007C72AA /* InstaVideoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		669640811B7E75BF007C72AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 669640661B7E75BE007C72AA /* InstaVideo */;
+			targetProxy = 669640801B7E75BF007C72AA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		669640731B7E75BE007C72AA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				669640741B7E75BE007C72AA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		669640781B7E75BE007C72AA /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				669640791B7E75BE007C72AA /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		669640871B7E75BF007C72AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		669640881B7E75BF007C72AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6696408A1B7E75BF007C72AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = InstaVideo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6696408B1B7E75BF007C72AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = InstaVideo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		6696408D1B7E75BF007C72AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = InstaVideoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InstaVideo.app/InstaVideo";
+			};
+			name = Debug;
+		};
+		6696408E1B7E75BF007C72AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = InstaVideoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InstaVideo.app/InstaVideo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		669640621B7E75BE007C72AA /* Build configuration list for PBXProject "InstaVideo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				669640871B7E75BF007C72AA /* Debug */,
+				669640881B7E75BF007C72AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		669640891B7E75BF007C72AA /* Build configuration list for PBXNativeTarget "InstaVideo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6696408A1B7E75BF007C72AA /* Debug */,
+				6696408B1B7E75BF007C72AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6696408C1B7E75BF007C72AA /* Build configuration list for PBXNativeTarget "InstaVideoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6696408D1B7E75BF007C72AA /* Debug */,
+				6696408E1B7E75BF007C72AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6696406E1B7E75BE007C72AA /* InstaVideo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6696406F1B7E75BE007C72AA /* InstaVideo.xcdatamodel */,
+			);
+			currentVersion = 6696406F1B7E75BE007C72AA /* InstaVideo.xcdatamodel */;
+			path = InstaVideo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6696405F1B7E75BE007C72AA /* Project object */;
+}
