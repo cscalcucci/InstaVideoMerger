@@ -48,11 +48,9 @@ public class Cinema: UIView {
     public var muted: Bool!
 
     var clipArray : [Clip] = []
+
     var finalClip : Clip! {
-        get {
-            return self.finalClip
-        }
-        set {
+        didSet {
             setupAsset(self.finalClip.asset)
         }
     }

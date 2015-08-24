@@ -15,76 +15,31 @@ import AVKit
 class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, MPMediaPickerControllerDelegate {
 
 
+@IBOutlet weak var playerView: UIView!
 @IBOutlet weak var clipScroll: UIScrollView!
 @IBOutlet weak var clipView: UIView!
-@IBOutlet weak var movieView: UIView!
+@IBOutlet weak var movieView: Cinema!
 @IBOutlet var collectionOfButtons: [UIButton]!
-
-    //Data Properties
-    var audio : Audio! {
-        didSet {
-//            mergeClip()
-        }
-    }
-    var finalClip : Clip! {
-        didSet {
-            print("=============== Replacing FinalClip ===============\n")
-            playerItem = AVPlayerItem(asset: finalClip.asset)
-        }
-    }
-
-    var clipArray : [Clip] = [] {
-        didSet {
-            createButtonScroller()
-            mergeClip()
-        }
-    }
 
     //Misc Properties
     var clipAmt = 0
     var clipScroller : UIScrollView!
-    var isPlaying : Bool!
-
-    //Player Properties
-    var player : AVPlayer = AVPlayer.new()
-
-    var playerItem : AVPlayerItem? = nil {
-        didSet {
-            print("=============== Replacing PlayerItem ===============\n")
-//            player.replaceCurrentItemWithPlayerItem(playerItem)
-            player = AVPlayer(playerItem: playerItem)
-            playerLayer.removeFromSuperlayer()
-            movieView.layer.addSublayer(playerLayer)
-        }
-    }
-    var playerLayer : AVPlayerLayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         createButtons()
 
-        isPlaying = false
-
         let tap = UITapGestureRecognizer(target: self, action: Selector("playClip:"))
         movieView.addGestureRecognizer(tap)
 
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        let mainQueue = NSOperationQueue.mainQueue()
-
-        _ = notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification,
-            object: nil,
-            queue: mainQueue) { _ in
-                self.player.seekToTime(kCMTimeZero)
-                self.isPlaying = false
-        }
     }
 
-    override func viewDidLayoutSubviews() {
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = movieView.bounds
-        movieView.layer.addSublayer(playerLayer)
-    }
+//    override func viewDidLayoutSubviews() {
+//        playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.frame = movieView.bounds
+//        movieView.layer.addSublayer(playerLayer)
+//    }
 
     //Rounding buttons and setting attributes
     func createButtons() {
@@ -114,11 +69,10 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     }
 
     func didFinish() {
-        let cinema = Cinema()
-        cinema.frame = self.view.bounds
+//        let cinema = Cinema()
+//        cinema.frame = self.view.bounds
 //        cinema.path = "movie.mp4"
-        self.view.addSubview(cinema)
-        cinema.playFromBeginning()
+//        self.view.addSubview(cinema)
     }
 
     //Adds clips to a scroll view
@@ -127,9 +81,9 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         var maxX: CGFloat = 0
         var i : CGFloat = 0
 
-        for clip in clipArray {
+        for clip in movieView.clipArray {
 
-            let clip = clipArray[Int(i)]
+            let clip = movieView.clipArray[Int(i)]
 
             var clipFrame = CGRectMake((i * 120) + (i * 30) + 5, (clipScroll.bounds.size.height - 80) / 2, 120, 80)
 
@@ -158,46 +112,46 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
 
     func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
 
-            var tmpItem = mediaItemCollection.items[0] as? MPMediaItem
-            let item : MPMediaItem! = tmpItem!
-            //Makes sure the item is local and not iCloud
-            var strCloud = item.valueForProperty(MPMediaItemPropertyIsCloudItem) as! NSNumber.BooleanLiteralType
-
-//            print("\(strCloud)=================================\n")
-
-            if tmpItem != nil && !strCloud  {
-
-                    //Finding path to make the asset
-                if let itemUrl = item.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
-                    print("================ URL is \(itemUrl) =================\n")
-                    self.audio = Audio(url: itemUrl)
-                    print("================ Title is \((item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!) =================\n")
-                    audio.title = (item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!
-                    print("================ Artist is \((item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!) =================\n")
-                    audio.artist = (item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!
-                    mediaPicker.dismissViewControllerAnimated(true, completion: nil)
-
-                } else {
-                        //Error notifying that the song isn't local
-                    let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
-                    alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-
-                //Trawling metadata
-//                let itemTitle = item!.valueForProperty(MPMediaItemPropertyTitle) as? String
-//                let itemArtist = item!.valueForProperty(MPMediaItemPropertyArtist) as? String
-//                let itemArtwork = item!.valueForProperty(MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
-//                print("Media Title \(itemTitle)\n Media Artist \(itemArtist) \n Media Artwork \(itemArtwork)")
-
-            } else {
-                //Error notifying that the song isn't local
-                let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
-                    alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+//            var tmpItem = mediaItemCollection.items[0] as? MPMediaItem
+//            let item : MPMediaItem! = tmpItem!
+//            //Makes sure the item is local and not iCloud
+//            var strCloud = item.valueForProperty(MPMediaItemPropertyIsCloudItem) as! NSNumber.BooleanLiteralType
+//
+////            print("\(strCloud)=================================\n")
+//
+//            if tmpItem != nil && !strCloud  {
+//
+//                    //Finding path to make the asset
+//                if let itemUrl = item.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
+//                    print("================ URL is \(itemUrl) =================\n")
+////                    self.audio = Audio(url: itemUrl)
+//                    print("================ Title is \((item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!) =================\n")
+//                    audio.title = (item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!
+//                    print("================ Artist is \((item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!) =================\n")
+//                    audio.artist = (item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!
+//                    mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+//
+//                } else {
+//                        //Error notifying that the song isn't local
+//                    let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
+//                    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
+//                    alert.addAction(cancelAction)
+//                    self.presentViewController(alert, animated: true, completion: nil)
+//                }
+//
+//                //Trawling metadata
+////                let itemTitle = item!.valueForProperty(MPMediaItemPropertyTitle) as? String
+////                let itemArtist = item!.valueForProperty(MPMediaItemPropertyArtist) as? String
+////                let itemArtwork = item!.valueForProperty(MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
+////                print("Media Title \(itemTitle)\n Media Artist \(itemArtist) \n Media Artwork \(itemArtwork)")
+//
+//            } else {
+//                //Error notifying that the song isn't local
+//                let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
+//                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
+//                    alert.addAction(cancelAction)
+//                self.presentViewController(alert, animated: true, completion: nil)
+//            }
     }
 
     func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
@@ -229,7 +183,7 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         let pathString = tempImage.relativePath
         let assetUrl =  NSURL.fileURLWithPath(pathString!)
 
-        createClip(assetUrl!)
+//        movieView.createClip(assetUrl!)
 
         //Saves video to Camera Roll
 //        UISaveVideoAtPathToSavedPhotosAlbum(pathString, self, nil, nil)
@@ -240,35 +194,23 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         self.dismissViewControllerAnimated(true, completion: {})
     }
 
-
-//    func setPlayer(clip: Clip) {
-//        playerItem = AVPlayerItem(asset: clip.asset)
-//        playerItem.re
-////        player.replaceCurrentItemWithPlayerItem(playerItem)
-////        playerLayer.replaceSublayer(<#layer: CALayer!#>, with: <#CALayer!#>)
-////        player = AVPlayer(playerItem: playerItem!)
-////        playerLayer = AVPlayerLayer(player: player)
-////        playerLayer.removeFromSuperlayer()
-//    }
-
     func clipTapped(sender: UIButton) {
-        let clip = clipArray[sender.tag]
+//        let clip = movieView.clipArray[sender.tag]
 
         let avPlayer : AVPlayerViewController = AVPlayerViewController.new()
-        avPlayer.player = AVPlayer(playerItem: AVPlayerItem(asset: finalClip.asset))
+        avPlayer.player = AVPlayer(playerItem: AVPlayerItem(asset: clip.asset))
         presentViewController(avPlayer, animated: true, completion: nil)
-//        playerItem = AVPlayerItem(asset: clip.asset)
     }
 
     //Handles the pausing/playing of the clip
     func playClip(sender: UITapGestureRecognizer) {
-        if (!isPlaying) {
-            player.play()
-        } else {
-            player.pause()
-        }
 
-        isPlaying = !isPlaying
+        switch (movieView.playbackState.description) {
+            case "Playing": movieView.pause(); break;
+            case "Paused": movieView.playFromCurrentTime(); break;
+            case "Stopped": movieView.playFromBeginning(); break;
+            default : break
+        }
     }
 }
 

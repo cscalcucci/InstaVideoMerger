@@ -18,7 +18,7 @@
 		669640941B81EB68007C72AA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640931B81EB68007C72AA /* AVFoundation.framework */; };
 		669640961B81ECC7007C72AA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640951B81ECC7007C72AA /* MediaPlayer.framework */; };
 		669640981B820367007C72AA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640971B820367007C72AA /* AVKit.framework */; };
-		66D32DBE1B8ACFAF001421F9 /* CinemaPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32D871B879418001421F9 /* CinemaPlay.swift */; };
+		66D32DBF1B8BBFEE001421F9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32D801B86CD53001421F9 /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,9 +248,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66D32DBF1B8BBFEE001421F9 /* Player.swift in Sources */,
 				669640901B7E7764007C72AA /* HomeVC.swift in Sources */,
 				6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */,
-				66D32DBE1B8ACFAF001421F9 /* CinemaPlay.swift in Sources */,
 				669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

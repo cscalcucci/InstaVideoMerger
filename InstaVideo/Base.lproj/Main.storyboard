@@ -171,23 +171,65 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LRq-3w-fDA" userLabel="movieView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ic-eb-rzX">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="320" id="7hr-hn-bwl"/>
+                                            <constraint firstAttribute="height" constant="192" id="sMD-Vf-Ys5"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="7hr-hn-bwl"/>
+                                                <exclude reference="sMD-Vf-Ys5"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="7hr-hn-bwl"/>
+                                                <include reference="sMD-Vf-Ys5"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <segue destination="N8x-NY-87a" kind="embed" id="vew-ve-0bT"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
                                 <color key="backgroundColor" red="0.077582828320000005" green="0.067037589519999996" blue="0.067037589519999996" alpha="0.48999999999999999" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="4Ic-eb-rzX" secondAttribute="bottom" id="BOd-1S-7PT"/>
                                     <constraint firstAttribute="width" constant="320" id="Bht-sx-0e3"/>
+                                    <constraint firstItem="4Ic-eb-rzX" firstAttribute="leading" secondItem="LRq-3w-fDA" secondAttribute="leading" id="H80-cS-oxp"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Ic-eb-rzX" secondAttribute="trailing" id="a00-nw-eFZ"/>
+                                    <constraint firstItem="4Ic-eb-rzX" firstAttribute="top" secondItem="LRq-3w-fDA" secondAttribute="top" id="meU-p4-TzG"/>
                                     <constraint firstAttribute="height" constant="180" id="xA4-Ra-WRb">
                                         <variation key="heightClass=regular-widthClass=compact" constant="192"/>
                                     </constraint>
                                 </constraints>
                                 <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="4Ic-eb-rzX"/>
+                                    </mask>
                                     <mask key="constraints">
                                         <exclude reference="Bht-sx-0e3"/>
                                         <exclude reference="xA4-Ra-WRb"/>
+                                        <exclude reference="BOd-1S-7PT"/>
+                                        <exclude reference="H80-cS-oxp"/>
+                                        <exclude reference="a00-nw-eFZ"/>
+                                        <exclude reference="meU-p4-TzG"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="4Ic-eb-rzX"/>
+                                    </mask>
                                     <mask key="constraints">
                                         <include reference="Bht-sx-0e3"/>
                                         <include reference="xA4-Ra-WRb"/>
+                                        <include reference="BOd-1S-7PT"/>
+                                        <include reference="H80-cS-oxp"/>
+                                        <include reference="a00-nw-eFZ"/>
+                                        <include reference="meU-p4-TzG"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -446,6 +488,7 @@
                         <outlet property="clipScroll" destination="6YI-F5-vtb" id="Sn2-mT-hp9"/>
                         <outlet property="clipView" destination="b0G-6f-GNK" id="hVu-vX-UdV"/>
                         <outlet property="movieView" destination="LRq-3w-fDA" id="gSA-1W-P4Y"/>
+                        <outlet property="playerView" destination="4Ic-eb-rzX" id="20r-U2-9O8"/>
                         <outletCollection property="collectionOfButtons" destination="7G6-EY-9wo" collectionClass="NSMutableArray" id="S2E-JE-Ehh"/>
                         <outletCollection property="collectionOfButtons" destination="jO5-FM-ruI" collectionClass="NSMutableArray" id="cW9-vc-2rJ"/>
                         <outletCollection property="collectionOfButtons" destination="18J-tk-vT6" collectionClass="NSMutableArray" id="fmm-gq-alo"/>
@@ -475,6 +518,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eub-q5-Ba8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="156" y="-379"/>
+        </scene>
+        <!--Player-->
+        <scene sceneID="Lfn-R6-JNf">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="N8x-NY-87a" customClass="Player" customModule="InstaVideo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HT4-cK-uSP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ue7-bj-fUb"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="b8l-Ll-yzk">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6eR-pk-uCV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1651.5" y="-537.75"/>
         </scene>
     </scenes>
 </document>
