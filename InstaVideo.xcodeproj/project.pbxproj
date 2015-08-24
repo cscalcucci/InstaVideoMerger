@@ -9,11 +9,16 @@
 /* Begin PBXBuildFile section */
 		6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6696406C1B7E75BE007C72AA /* AppDelegate.swift */; };
 		669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6696406E1B7E75BE007C72AA /* InstaVideo.xcdatamodeld */; };
-		669640721B7E75BE007C72AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669640711B7E75BE007C72AA /* ViewController.swift */; };
 		669640751B7E75BE007C72AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669640731B7E75BE007C72AA /* Main.storyboard */; };
 		669640771B7E75BE007C72AA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 669640761B7E75BE007C72AA /* Images.xcassets */; };
 		6696407A1B7E75BE007C72AA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669640781B7E75BE007C72AA /* LaunchScreen.xib */; };
 		669640861B7E75BF007C72AA /* InstaVideoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669640851B7E75BF007C72AA /* InstaVideoTests.swift */; };
+		669640901B7E7764007C72AA /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6696408F1B7E7764007C72AA /* HomeVC.swift */; };
+		669640921B7E82A3007C72AA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640911B7E82A3007C72AA /* MobileCoreServices.framework */; };
+		669640941B81EB68007C72AA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640931B81EB68007C72AA /* AVFoundation.framework */; };
+		669640961B81ECC7007C72AA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640951B81ECC7007C72AA /* MediaPlayer.framework */; };
+		669640981B820367007C72AA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640971B820367007C72AA /* AVKit.framework */; };
+		66D32DBE1B8ACFAF001421F9 /* CinemaPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32D871B879418001421F9 /* CinemaPlay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +36,21 @@
 		6696406B1B7E75BE007C72AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6696406C1B7E75BE007C72AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6696406F1B7E75BE007C72AA /* InstaVideo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InstaVideo.xcdatamodel; sourceTree = "<group>"; };
-		669640711B7E75BE007C72AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		669640741B7E75BE007C72AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		669640761B7E75BE007C72AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		669640791B7E75BE007C72AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6696407F1B7E75BF007C72AA /* InstaVideoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstaVideoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		669640841B7E75BF007C72AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		669640851B7E75BF007C72AA /* InstaVideoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstaVideoTests.swift; sourceTree = "<group>"; };
+		6696408F1B7E7764007C72AA /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		669640911B7E82A3007C72AA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		669640931B81EB68007C72AA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		669640951B81ECC7007C72AA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		669640971B820367007C72AA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		66D32D801B86CD53001421F9 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		66D32D831B86DCE3001421F9 /* Cinema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cinema.swift; sourceTree = "<group>"; };
+		66D32D851B879076001421F9 /* CinemaTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CinemaTest.swift; sourceTree = "<group>"; };
+		66D32D871B879418001421F9 /* CinemaPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CinemaPlay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +58,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				669640981B820367007C72AA /* AVKit.framework in Frameworks */,
+				669640961B81ECC7007C72AA /* MediaPlayer.framework in Frameworks */,
+				669640941B81EB68007C72AA /* AVFoundation.framework in Frameworks */,
+				669640921B7E82A3007C72AA /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +78,7 @@
 		6696405E1B7E75BE007C72AA = {
 			isa = PBXGroup;
 			children = (
+				66D32D821B86CD69001421F9 /* Frameworks */,
 				669640691B7E75BE007C72AA /* InstaVideo */,
 				669640821B7E75BF007C72AA /* InstaVideoTests */,
 				669640681B7E75BE007C72AA /* Products */,
@@ -80,7 +98,11 @@
 			isa = PBXGroup;
 			children = (
 				6696406C1B7E75BE007C72AA /* AppDelegate.swift */,
-				669640711B7E75BE007C72AA /* ViewController.swift */,
+				6696408F1B7E7764007C72AA /* HomeVC.swift */,
+				66D32D801B86CD53001421F9 /* Player.swift */,
+				66D32D871B879418001421F9 /* CinemaPlay.swift */,
+				66D32D851B879076001421F9 /* CinemaTest.swift */,
+				66D32D831B86DCE3001421F9 /* Cinema.swift */,
 				669640731B7E75BE007C72AA /* Main.storyboard */,
 				669640761B7E75BE007C72AA /* Images.xcassets */,
 				669640781B7E75BE007C72AA /* LaunchScreen.xib */,
@@ -113,6 +135,17 @@
 				669640841B7E75BF007C72AA /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		66D32D821B86CD69001421F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				669640971B820367007C72AA /* AVKit.framework */,
+				669640951B81ECC7007C72AA /* MediaPlayer.framework */,
+				669640931B81EB68007C72AA /* AVFoundation.framework */,
+				669640911B7E82A3007C72AA /* MobileCoreServices.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,8 +248,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				669640721B7E75BE007C72AA /* ViewController.swift in Sources */,
+				669640901B7E7764007C72AA /* HomeVC.swift in Sources */,
 				6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */,
+				66D32DBE1B8ACFAF001421F9 /* CinemaPlay.swift in Sources */,
 				669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +447,7 @@
 				6696408B1B7E75BF007C72AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6696408C1B7E75BF007C72AA /* Build configuration list for PBXNativeTarget "InstaVideoTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +456,7 @@
 				6696408E1B7E75BF007C72AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
