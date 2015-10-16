@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6628011C1B92C91100DDB109 /* EditScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628011B1B92C91100DDB109 /* EditScreen.swift */; };
+		6628018F1B96C3C300DDB109 /* FreeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628018E1B96C3C300DDB109 /* FreeRange.swift */; };
+		6628060C1B97AC4100DDB109 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6628060A1B97AC4100DDB109 /* Security.framework */; };
+		6628060D1B97AC4100DDB109 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6628060B1B97AC4100DDB109 /* SystemConfiguration.framework */; };
+		66861F4F1B9D522500C36503 /* UIBorders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66861F4E1B9D522500C36503 /* UIBorders.swift */; };
 		6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6696406C1B7E75BE007C72AA /* AppDelegate.swift */; };
 		669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6696406E1B7E75BE007C72AA /* InstaVideo.xcdatamodeld */; };
 		669640751B7E75BE007C72AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 669640731B7E75BE007C72AA /* Main.storyboard */; };
@@ -19,6 +24,8 @@
 		669640961B81ECC7007C72AA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640951B81ECC7007C72AA /* MediaPlayer.framework */; };
 		669640981B820367007C72AA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669640971B820367007C72AA /* AVKit.framework */; };
 		66D32DBF1B8BBFEE001421F9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32D801B86CD53001421F9 /* Player.swift */; };
+		66D32DC11B8C46FF001421F9 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D32DC01B8C46FF001421F9 /* libc++abi.dylib */; };
+		66D32DC71B8D3674001421F9 /* UpgradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32DC61B8D3674001421F9 /* UpgradesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6628011B1B92C91100DDB109 /* EditScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditScreen.swift; sourceTree = "<group>"; };
+		662801581B92FDCA00DDB109 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
+		6628018E1B96C3C300DDB109 /* FreeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeRange.swift; sourceTree = "<group>"; };
+		6628060A1B97AC4100DDB109 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		6628060B1B97AC4100DDB109 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		66861F4E1B9D522500C36503 /* UIBorders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBorders.swift; sourceTree = "<group>"; };
 		669640671B7E75BE007C72AA /* InstaVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6696406B1B7E75BE007C72AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6696406C1B7E75BE007C72AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +64,8 @@
 		66D32D831B86DCE3001421F9 /* Cinema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cinema.swift; sourceTree = "<group>"; };
 		66D32D851B879076001421F9 /* CinemaTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CinemaTest.swift; sourceTree = "<group>"; };
 		66D32D871B879418001421F9 /* CinemaPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CinemaPlay.swift; sourceTree = "<group>"; };
+		66D32DC01B8C46FF001421F9 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "usr/lib/libc++abi.dylib"; sourceTree = SDKROOT; };
+		66D32DC61B8D3674001421F9 /* UpgradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradesVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6628060C1B97AC4100DDB109 /* Security.framework in Frameworks */,
+				6628060D1B97AC4100DDB109 /* SystemConfiguration.framework in Frameworks */,
+				66D32DC11B8C46FF001421F9 /* libc++abi.dylib in Frameworks */,
 				669640981B820367007C72AA /* AVKit.framework in Frameworks */,
 				669640961B81ECC7007C72AA /* MediaPlayer.framework in Frameworks */,
 				669640941B81EB68007C72AA /* AVFoundation.framework in Frameworks */,
@@ -75,6 +93,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6628011A1B92C82900DDB109 /* Cinema */ = {
+			isa = PBXGroup;
+			children = (
+				66D32D871B879418001421F9 /* CinemaPlay.swift */,
+				66D32D851B879076001421F9 /* CinemaTest.swift */,
+				66D32D831B86DCE3001421F9 /* Cinema.swift */,
+			);
+			name = Cinema;
+			sourceTree = "<group>";
+		};
 		6696405E1B7E75BE007C72AA = {
 			isa = PBXGroup;
 			children = (
@@ -97,17 +125,20 @@
 		669640691B7E75BE007C72AA /* InstaVideo */ = {
 			isa = PBXGroup;
 			children = (
+				6628011A1B92C82900DDB109 /* Cinema */,
+				66D32D801B86CD53001421F9 /* Player.swift */,
+				66861F4E1B9D522500C36503 /* UIBorders.swift */,
 				6696406C1B7E75BE007C72AA /* AppDelegate.swift */,
 				6696408F1B7E7764007C72AA /* HomeVC.swift */,
-				66D32D801B86CD53001421F9 /* Player.swift */,
-				66D32D871B879418001421F9 /* CinemaPlay.swift */,
-				66D32D851B879076001421F9 /* CinemaTest.swift */,
-				66D32D831B86DCE3001421F9 /* Cinema.swift */,
+				6628011B1B92C91100DDB109 /* EditScreen.swift */,
+				66D32DC61B8D3674001421F9 /* UpgradesVC.swift */,
+				6628018E1B96C3C300DDB109 /* FreeRange.swift */,
 				669640731B7E75BE007C72AA /* Main.storyboard */,
 				669640761B7E75BE007C72AA /* Images.xcassets */,
 				669640781B7E75BE007C72AA /* LaunchScreen.xib */,
 				6696406E1B7E75BE007C72AA /* InstaVideo.xcdatamodeld */,
 				6696406A1B7E75BE007C72AA /* Supporting Files */,
+				662801581B92FDCA00DDB109 /* Bridge.h */,
 			);
 			path = InstaVideo;
 			sourceTree = "<group>";
@@ -140,6 +171,9 @@
 		66D32D821B86CD69001421F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6628060A1B97AC4100DDB109 /* Security.framework */,
+				6628060B1B97AC4100DDB109 /* SystemConfiguration.framework */,
+				66D32DC01B8C46FF001421F9 /* libc++abi.dylib */,
 				669640971B820367007C72AA /* AVKit.framework */,
 				669640951B81ECC7007C72AA /* MediaPlayer.framework */,
 				669640931B81EB68007C72AA /* AVFoundation.framework */,
@@ -192,6 +226,7 @@
 		6696405F1B7E75BE007C72AA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Aphelion;
 				TargetAttributes = {
@@ -249,9 +284,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				66D32DBF1B8BBFEE001421F9 /* Player.swift in Sources */,
+				66861F4F1B9D522500C36503 /* UIBorders.swift in Sources */,
+				6628018F1B96C3C300DDB109 /* FreeRange.swift in Sources */,
+				66D32DC71B8D3674001421F9 /* UpgradesVC.swift in Sources */,
 				669640901B7E7764007C72AA /* HomeVC.swift in Sources */,
 				6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */,
 				669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */,
+				6628011C1B92C91100DDB109 /* EditScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +419,23 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InstaVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/InstaVideo/Flurry",
+					iPhone,
+					SDK,
+					viPhone,
+					SDK,
+					"7.0.0/Flurry-iOS-7.0.0/Flurry",
+					"$(PROJECT_DIR)/InstaVideo/Flurry",
+					iPhone,
+					SDK,
+					viPhone,
+					SDK,
+					"7.0.0/Flurry-iOS-7.0.0/FlurryAds",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = InstaVideo/Bridge.h;
 			};
 			name = Debug;
 		};
@@ -390,7 +445,23 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InstaVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/InstaVideo/Flurry",
+					iPhone,
+					SDK,
+					viPhone,
+					SDK,
+					"7.0.0/Flurry-iOS-7.0.0/Flurry",
+					"$(PROJECT_DIR)/InstaVideo/Flurry",
+					iPhone,
+					SDK,
+					viPhone,
+					SDK,
+					"7.0.0/Flurry-iOS-7.0.0/FlurryAds",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = InstaVideo/Bridge.h;
 			};
 			name = Release;
 		};
