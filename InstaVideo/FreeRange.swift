@@ -81,12 +81,12 @@ class FreeRange: UIControl {
     }
 
     required init(coder: NSCoder) {
-        super.init(coder: coder)
+        super.init(coder: coder)!
     }
 
     func maskTrack() {
-        var maskLayer = CAShapeLayer()
-        var path : CGPathRef = CGPathCreateWithRect(self.trackMask, nil)
+        let maskLayer = CAShapeLayer()
+        let path : CGPathRef = CGPathCreateWithRect(self.trackMask, nil)
         maskLayer.path = path
         self.track.layer.mask = maskLayer
     }
@@ -110,9 +110,9 @@ class FreeRange: UIControl {
             (maximumValue - minimumValue) + Double(thumbWidth / 2.0)
     }
 
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+    override func beginTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) -> Bool {
 
-        previousLocation = touch.locationInView(self)
+        previousLocation = touch!.locationInView(self)
 
         // Hit test the thumb layers
         if lowerThumb.frame.contains(previousLocation) {
@@ -129,12 +129,12 @@ class FreeRange: UIControl {
         return min(max(value, lowerValue), upperValue)
     }
 
-    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        let location = touch.locationInView(self)
+    override func continueTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) -> Bool {
+        let location = touch!.locationInView(self)
 
         // 1. Determine by how much the user has dragged
         let deltaLocation = Double(location.x - previousLocation.x)
-        var deltaValue = (maximumValue - minimumValue) * deltaLocation / Double(bounds.width - thumbWidth)
+        let deltaValue = (maximumValue - minimumValue) * deltaLocation / Double(bounds.width - thumbWidth)
 
         previousLocation = location
 
@@ -156,13 +156,10 @@ class FreeRange: UIControl {
 
         }
 
-
-
-
         return true
     }
 
-    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
+    override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
         lowerThumb.highlighted = false
         upperThumb.highlighted = false
     }
@@ -202,7 +199,7 @@ internal class Background : UIView {
     }
 
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
 
 }
@@ -231,6 +228,6 @@ internal class ThumbView: UIView {
     }
 
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
 }

@@ -12,7 +12,7 @@ import AVFoundation
 import MediaPlayer
 import AVKit
 
-class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, MPMediaPickerControllerDelegate {
+class HomeVC: UIViewController, UIScrollViewDelegate {
 
 @IBOutlet weak var playBtn: UIImageView!
 @IBOutlet weak var audioLabel: UILabel!
@@ -22,18 +22,21 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
 @IBOutlet var collectionOfButtons: [UIButton]!
 
     //Misc Properties
-    var clipAmt = 0
     var clipScroller : UIScrollView!
 
-    var clipArray : [Clip] = []
-    var finalClip : Clip!
-    var selectedClip : Clip!
-    var audio : Audio!
     var audioSet : Bool!
 
     var watermark : UIImage!
-
     var player : Player!
+
+    var audioAsset : AVAsset?
+
+    var clipArray : [AVAsset] = [] {
+        didSet {
+            self.createButtonScroller()
+            self.merge()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,20 +45,20 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
 
         self.watermark = UIImage(named: "DoneBtn")
 
-        var attributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!
-        ]
+//        let attributes = [
+//            NSForegroundColorAttributeName: UIColor.whiteColor(),
+//            NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!
+//        ]
 
-        var navString = NSMutableAttributedString(string: "INSTAVIDEOMERGE", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!])
+        let navString = NSMutableAttributedString(string: "INSTAVIDEOMERGE", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!])
 
         navString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 196/255, green: 225/255, blue: 2/255, alpha: 1.0), range: NSRange(location:5,length:5))
 
-        var navLabel = UILabel()
-        navLabel.attributedText = navString
-        navLabel.sizeToFit()
-        self.navigationItem.titleView = navLabel
+        let navLabel = UILabel()
+            navLabel.attributedText = navString
+            navLabel.sizeToFit()
 
+        self.navigationItem.titleView = navLabel
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.translucent = true
@@ -84,6 +87,7 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
 
     //Rounding buttons and setting attributes
     func createButtons() {
+
         for btn in collectionOfButtons {
             btn.removeFromSuperview()
             btn.frame = CGRectMake(btn.frame.width, btn.frame.height, 65, 65)
@@ -97,14 +101,23 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     func btnTapped(sender: UIButton) {
         switch sender.tag {
             case 0: break //+ & vidView
-            case 1: addClip(false); break //Add Clip
-            case 2: addClip(true); break //Record Clip
+            case 1: addClip(); break //Add Clip
+            case 2: addClip(); break //Record Clip
             case 3: addAudio(); break //Add Audio
             case 4: break //Watermark
             case 5: performSegueWithIdentifier("upgradeSegue", sender: nil); break //Upgrades
             case 6: finishVideo(); break //Finished
         default: break
         }
+    }
+
+    func addClip() {
+        if savedPhotosAvailable() {
+            startMediaBrowserFromViewController(self, usingDelegate: self)
+        }
+    }
+
+    func recordClip() {
     }
 
     func finishVideo() {
@@ -114,371 +127,385 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         }
     }
 
-    func finishError() {
-        let finishAlert = UIAlertController(title: "Error", message: "You must add a video before finishing!", preferredStyle: .Alert)
+    func createImage(asset: AVAsset) -> UIImage {
 
-        let cancelAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
-            // ...
+        var img = UIImage(named: "")
+        let imageGenerator = AVAssetImageGenerator(asset: asset);
+        let time = CMTimeMakeWithSeconds(1.0, 1)
+
+        imageGenerator.appliesPreferredTrackTransform = true
+
+        do {
+            let cgImg = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+            img = UIImage(CGImage: cgImg)
+
+        } catch {
+            print(error)
         }
-
-        finishAlert.addAction(cancelAction)
-
-        self.presentViewController(finishAlert, animated: true, completion: nil)
-
-    }
-
-    func destroyAlert() {
-        let destroyAlert = UIAlertController(title: "Start Over", message: "Erase video and start over?", preferredStyle: .Alert)
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            // ...
-        }
-
-        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
-            // ...
-        }
-
-        destroyAlert.addAction(cancelAction)
-        destroyAlert.addAction(confirmAction)
-
-        self.presentViewController(destroyAlert, animated: true, completion: nil)
-
-    }
-
-    func finishSheet() {
-        let finishSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-
-        let deleteAction = UIAlertAction(title: "Start Over", style: .Destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            self.destroyAlert()
-            println("Start Over")
-        })
-
-        let galleryAction = UIAlertAction(title: "Save to Gallery", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            println("File Saved")
-        })
-
-        let facebookAction = UIAlertAction(title: "Post to Facebook", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            println("Posted to Facebook")
-        })
-
-        let instagramAction = UIAlertAction(title: "Post to Instagram", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            println("Posted to Instagram")
-        })
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-            println("Cancelled")
-        })
-
-        finishSheet.addAction(galleryAction)
-        finishSheet.addAction(facebookAction)
-        finishSheet.addAction(instagramAction)
-        finishSheet.addAction(deleteAction)
-        finishSheet.addAction(cancelAction)
-
-        self.presentViewController(finishSheet, animated: true, completion: nil)
-
-    }
-
-    func createClip(url: NSURL) {
-        let clip = Clip(url: url)
-
-        self.clipArray.append(clip)
-        self.mergeClip()
-        createButtonScroller()
+        return img!
     }
 
     //Adds clips to a scroll view
     func createButtonScroller() {
 
         var maxX: CGFloat = 0
-        var i : CGFloat = 0
 
-        for clip in self.clipArray {
+        for (var i = 0; i < self.clipArray.count; i++) {
 
-            let clip = self.clipArray[Int(i)]
+            let x = CGFloat(i)
 
-            var clipFrame = CGRectMake((i * 120) + (i * 30) + 5, (clipScroll.bounds.size.height - 80) / 2, 120, 80)
+            let clip = self.clipArray[i]
+            let thumbnail = createImage(clip)
+
+            let clipFrame = CGRectMake((x * 120) + (x * 30) + 5, (clipScroll.bounds.size.height - 80) / 2, 120, 80)
 
             let clipBtn = UIButton(frame: clipFrame)
-            clipBtn.setTitle("", forState: .Normal)
-            clipBtn.tag = (Int(i))
-            clipBtn.setBackgroundImage(UIImage(CGImage: clip.thumbnail), forState: .Normal)
-            clipBtn.addTarget(self, action: "clipTapped:", forControlEvents: .TouchUpInside)
+                clipBtn.setTitle("", forState: .Normal)
+                clipBtn.tag = i
+                clipBtn.setBackgroundImage(thumbnail, forState: .Normal)
+                clipBtn.addTarget(self, action: "clipTapped:", forControlEvents: .TouchUpInside)
+
             clipScroll.addSubview(clipBtn)
 
             maxX = CGRectGetMaxX(clipFrame)
-
-            i++
-
         }
+        
         clipScroll.contentSize = CGSizeMake(maxX, clipScroll.frame.height)
     }
 
+    func clipTapped(sender: UIButton) {
+
+        let clip = self.clipArray[sender.tag]
+
+        let player = AVPlayer(playerItem: AVPlayerItem(asset: clip))
+        let playerController = AVPlayerViewController()
+
+        playerController.player = player
+        self.addChildViewController(playerController)
+        self.view.addSubview(playerController.view)
+        playerController.view.frame = self.view.frame
+        
+        player.play()
+    }
+
     func addAudio() {
+
         let picker = MPMediaPickerController(mediaTypes: MPMediaType.AnyAudio)
-        picker.delegate = self
-        picker.showsCloudItems = false
-        picker.allowsPickingMultipleItems = false
-        [self .presentViewController(picker, animated: true, completion: nil)]
-    }
-
-    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-
-            var tmpItem = mediaItemCollection.items[0] as? MPMediaItem
-            let item : MPMediaItem! = tmpItem!
-            //Makes sure the item is local and not iCloud
-            var strCloud = item.valueForProperty(MPMediaItemPropertyIsCloudItem) as! NSNumber.BooleanLiteralType
-
-//            print("\(strCloud)=================================\n")
-
-            if tmpItem != nil && !strCloud  {
-
-                    //Finding path to make the asset
-                if let itemUrl = item.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
-                    print("================ URL is \(itemUrl) =================\n")
-                    self.audio = Audio(url: itemUrl)
-                    self.audioSet = true
-                    print("================ Title is \((item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!) =================\n")
-                    audio.title = (item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!
-                    print("================ Artist is \((item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!) =================\n")
-                    audio.artist = (item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!
-                    self.audioLabel.text = "\(audio.title) by \(audio.artist)"
-                    mediaPicker.dismissViewControllerAnimated(true, completion: nil)
-                    mergeClip()
-
-                } else {
-                        //Error notifying that the song isn't local
-                    let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
-                    alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-
-                //Trawling metadata
-//                let itemTitle = item!.valueForProperty(MPMediaItemPropertyTitle) as? String
-//                let itemArtist = item!.valueForProperty(MPMediaItemPropertyArtist) as? String
-//                let itemArtwork = item!.valueForProperty(MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
-//                print("Media Title \(itemTitle)\n Media Artist \(itemArtist) \n Media Artwork \(itemArtwork)")
-
-            } else {
-                //Error notifying that the song isn't local
-                let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
-                    alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-    }
-
-    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
-        self.dismissViewControllerAnimated(true, completion: {})
-    }
-
-    //Adds a clip to the VC, takes a BOOL to determine recordCamera/addLibrary
-    func addClip(record: Bool) {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.mediaTypes = [kUTTypeMovie]
-
-        if record {
-            picker.sourceType = .Camera
-        } else {
-            picker.sourceType = .PhotoLibrary
-        }
+            picker.delegate = self
+            picker.showsCloudItems = false
+            picker.allowsPickingMultipleItems = false
 
         self.presentViewController(picker, animated: true, completion: nil)
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
 
-        self.dismissViewControllerAnimated(true, completion: {})
-
-        //Preparing the path for the clip
-        let tempImage = info[UIImagePickerControllerMediaURL] as! NSURL!
-        let pathString = tempImage.relativePath
-        let assetUrl =  NSURL.fileURLWithPath(pathString!)
-
-        self.createClip(assetUrl!)
-
-        //Saves video to Camera Roll
-//        UISaveVideoAtPathToSavedPhotosAlbum(pathString, self, nil, nil)
-
-    }
-
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: {})
-    }
-
-    func clipTapped(sender: UIButton) {
-        self.selectedClip = self.clipArray[sender.tag]
-
-        performSegueWithIdentifier("editSegue", sender: nil)
-    }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "editSegue" {
-            let destinationVC : EditScreen = segue.destinationViewController as! EditScreen
-            destinationVC.selectedClip = self.selectedClip
+    //New
+    func savedPhotosAvailable() -> Bool {
+        if UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) == false {
+            let alert = UIAlertController(title: "Not Available", message: "No Saved Album found", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+            presentViewController(alert, animated: true, completion: nil)
+            return false
         }
+        return true
+    }
+
+    func startMediaBrowserFromViewController(viewController: UIViewController!, usingDelegate delegate : protocol<UINavigationControllerDelegate, UIImagePickerControllerDelegate>) -> Bool {
+
+        if UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) == false {
+            return false
+        }
+
+        let mediaUI = UIImagePickerController()
+            mediaUI.sourceType = .SavedPhotosAlbum
+            mediaUI.mediaTypes = [kUTTypeMovie as NSString as String]
+            mediaUI.allowsEditing = true
+            mediaUI.delegate = delegate
+
+        presentViewController(mediaUI, animated: true, completion: nil)
+
+        return true
     }
 
     //Handles the pausing/playing of the clip
     func playClip(sender: UITapGestureRecognizer) {
-        if self.clipArray.count != 0 {
-            self.playBtn.hidden = !self.playBtn.hidden
-        }
 
         switch (player.playbackState.description) {
             case "Playing":
                 player.pause()
-                print("================Playing=============")
+                self.playBtn.hidden = false
+                print("================ Paused Player =============")
                 break
             case "Paused":
                 player.playFromCurrentTime()
-                print("================Paused=============")
+                self.playBtn.hidden = true
+                print("================ Playing From Current =============")
                 break
             case "Stopped":
                 player.playFromBeginning()
-                print("================Stopped=============")
+                self.playBtn.hidden = true
+                print("================ Playing From Beginning =============")
                 break
             default : break
-        }
+            }
     }
 
-    func mergeClip() {
-        print("================= Merging =================\n")
+    func merge() {
+//        activitySpinner.startAnimating()
 
-        var composition = AVMutableComposition()
-        let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
-        let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
+        let mixComposition = AVMutableComposition()
+
+        let track = mixComposition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: Int32(kCMPersistentTrackID_Invalid))
+        let trackAudio = mixComposition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: Int32(kCMPersistentTrackID_Invalid))
+
         var insertTime = kCMTimeZero
+        var instructions : [AVMutableVideoCompositionLayerInstruction] = []
+        var videoSize = CGSize()
 
-        let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: trackVideo)
-//        var instructions : [AnyObject] = []
+        // Creating Tracks from Clips
+        for (var i = 0; i < (clipArray.count); i++) {
 
-        for clip in clipArray {
+            let clip = clipArray[i]
 
-            //Video Track
-            trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero, clip.asset.duration), ofTrack: clip.videoTrack, atTime: insertTime, error: nil)
+            print("CLIP COUNT IS \(clipArray.count) and I is \(i)")
 
-            //Transformation
-            let transform : CGAffineTransform = clip.videoTrack!.preferredTransform
-            layerInstruction.setTransform(transform, atTime: insertTime)
+            do {
+                try track.insertTimeRange(CMTimeRangeMake(kCMTimeZero, clip.duration),
+                    ofTrack: clip.tracksWithMediaType(AVMediaTypeVideo)[0] ,
+                    atTime: insertTime)
 
-            //Audio Track
-            if (audioSet == false) {
-                trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero, clip.asset.duration), ofTrack: clip.audioTrack, atTime: insertTime, error: nil)
+                //Audio Track
+                if (audioAsset == nil) {
+
+                    try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero, clip.duration),
+                        ofTrack: clip.tracksWithMediaType(AVMediaTypeAudio)[0],
+                        atTime: insertTime)
+                }
+
+                let instruction = videoCompositionInstructionForTrack(track, asset: clip)
+                instructions.append(instruction)
+
+            } catch _ {
+                print("error")
             }
 
-            insertTime = CMTimeAdd(insertTime, clip.asset.duration)
-        }
+            insertTime = CMTimeAdd(insertTime, clip.duration)
 
-
-        //Audio Track
-        if (audioSet == true) {
-            trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero, insertTime), ofTrack: self.audio.audioTrack, atTime: kCMTimeZero, error: nil)
-        }
-
-        //Code to use a text instead of an image for watermark
-        //        CATextLayer *titleLayer = [CATextLayer layer];
-        //        titleLayer.string = @"Text goes here";
-        //        titleLayer.font = @"Helvetica";
-        //        titleLayer.fontSize = videoSize.height / 6;
-        //        //?? titleLayer.shadowOpacity = 0.5;
-        //        titleLayer.alignmentMode = kCAAlignmentCenter;
-        //        titleLayer.bounds = CGRectMake(0, 0, videoSize.width, videoSize.height / 6); //You may need to adjust this for proper display
-
-        let watermarkLayer = CALayer.new()
-        watermarkLayer.contents = self.watermark.CGImage
-        watermarkLayer.frame = CGRectMake(5, 5, 57, 57)
-        watermarkLayer.opacity = 0.65
-
-        let videoSize = trackVideo.naturalSize
-        let parentLayer = CALayer.new()
-        let videoLayer = CALayer.new()
-        parentLayer.frame = CGRectMake(0, 0, videoSize.width, videoSize.height)
-        videoLayer.frame = CGRectMake(0, 0, videoSize.width, videoSize.height)
-        parentLayer.addSublayer(videoLayer)
-        parentLayer.addSublayer(watermarkLayer)
-//        parentLayer.addSublayer(titleLayer) //ONLY IF WE ADDED TEXT
-
-        let videoComp = AVMutableVideoComposition.new()
-        videoComp.renderSize = videoSize
-        videoComp.frameDuration = CMTimeMake(1, 30)
-        //        videoComp.frameDuration = CMTimeMake(1, trackVideo.naturalTimeScale);
-        videoComp.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
-
-        let videoTrack = composition.tracksWithMediaType(AVMediaTypeVideo)
-        let instruction = AVMutableVideoCompositionInstruction.new()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, composition.duration)
-
-        instruction.layerInstructions = [layerInstruction]
-        videoComp.instructions = [instruction]
-
-        //Exporting
-        exportComposition(composition, video: videoComp)
-
-    }
-
-    func exportComposition(composition: AVMutableComposition, video: AVMutableVideoComposition?) {
-
-        var exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)
-        exporter.videoComposition = video
-
-        exporter.outputURL = getPath()
-        exporter.outputFileType = AVFileTypeQuickTimeMovie //AVFileTypeQuickTimeMovie
-        exporter.exportAsynchronouslyWithCompletionHandler({
-            switch exporter.status{
-            case  AVAssetExportSessionStatus.Failed:
-                println("================= Export Failed \(exporter.error) =================")
-            case AVAssetExportSessionStatus.Cancelled:
-                println("================= Export Cancelled \(exporter.error) =================")
-            default:
-                println("================= Complete =================")
-                self.exportDidFinish(exporter)
+            if i == 0 {
+                videoSize = track.naturalSize
             }
-        })
+
+        }
+
+        // Setting the Audio track if user selected custom audio
+        if let loadedAudioAsset = audioAsset {
+
+            let audioTrack = mixComposition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: 0)
+
+            do {
+                try audioTrack.insertTimeRange(CMTimeRangeMake(kCMTimeZero, insertTime),
+                    ofTrack: loadedAudioAsset.tracksWithMediaType(AVMediaTypeAudio)[0] ,
+                    atTime: kCMTimeZero)
+            } catch _ {
+
+            }
+        }
+
+                //Code to use a text instead of an image for watermark
+                //        CATextLayer *titleLayer = [CATextLayer layer];
+                //        titleLayer.string = @"Text goes here";
+                //        titleLayer.font = @"Helvetica";
+                //        titleLayer.fontSize = videoSize.height / 6;
+                //        //?? titleLayer.shadowOpacity = 0.5;
+                //        titleLayer.alignmentMode = kCAAlignmentCenter;
+                //        titleLayer.bounds = CGRectMake(0, 0, videoSize.width, videoSize.height / 6); //You may need to adjust this for proper display
+
+
+        let watermarkLayer = CALayer()
+            watermarkLayer.contents = self.watermark.CGImage
+            watermarkLayer.frame = CGRectMake(5, 5, 57, 57)
+            watermarkLayer.opacity = 0.65
+
+        let videoLayer = CALayer()
+            videoLayer.frame = CGRectMake(0, 0, videoSize.width, videoSize.height)
+
+        let parentLayer = CALayer()
+            parentLayer.frame = CGRectMake(0, 0, videoSize.width, videoSize.height)
+            parentLayer.addSublayer(videoLayer)
+            parentLayer.addSublayer(watermarkLayer)
+            //parentLayer.addSublayer(titleLayer) //ONLY IF WE ADDED TEXT
+
+        let mainInstruction = AVMutableVideoCompositionInstruction()
+            mainInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, insertTime)
+            mainInstruction.layerInstructions = instructions
+
+        let mainComposition = AVMutableVideoComposition()
+            mainComposition.instructions = [mainInstruction]
+            mainComposition.frameDuration = CMTimeMake(1, 30)
+            mainComposition.renderSize = videoSize
+            mainComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
+          //mainComposition.renderSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+
+        // Creating the Exporter
+        let exporter = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality)
+        exporter!.outputURL = getPath()
+        exporter!.outputFileType = AVFileTypeQuickTimeMovie
+        exporter!.shouldOptimizeForNetworkUse = true
+        exporter!.videoComposition = mainComposition
+
+        // Performing the Export
+        exporter!.exportAsynchronouslyWithCompletionHandler() {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
+                switch exporter!.status{
+                    case  AVAssetExportSessionStatus.Failed:
+                        print("================= Export Failed \(exporter!.error) =================")
+                    case AVAssetExportSessionStatus.Cancelled:
+                        print("================= Export Cancelled \(exporter!.error) =================")
+                    default:
+                        print("================= Complete =================")
+                        self.exportDidFinish(exporter!)
+                }
+            })
+        }
     }
 
+    //Legacy code commented out that instantly saves the video
     func exportDidFinish(session: AVAssetExportSession) {
-        print("================= Finishing Export =================\n")
-        self.finalClip = Clip(url: session.outputURL)
-        self.player.path = "\(session.outputURL)"
+
+        if session.status == AVAssetExportSessionStatus.Completed {
+
+            self.player.setUrl(session.outputURL!)
+
+//            let outputURL = session.outputURL
+//            let outputString = outputURL!.relativePath
+//
+//            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(outputString!)) {
+//
+//                print("Test")
+//
+//                UISaveVideoAtPathToSavedPhotosAlbum(outputString!, self,
+//                    "image:didFinishSavingWithError:contextInfo:", nil)
+//            } else {
+//
+//                print("Cannot Save to Camera Roll")
+//            }
+
+        }
+
+//        activitySpinner.stopAnimating()
     }
 
     func getPath() -> NSURL? {
-        let nsDocumentDirectory = NSSearchPathDirectory.DocumentDirectory
-        let nsUserDomainMask = NSSearchPathDomainMask.UserDomainMask
-        if let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true) {
-            if paths.count > 0 {
-                if let dirPath = paths[0] as? String {
-                    let writePath = dirPath.stringByAppendingPathComponent("movie.mp4")
-                    let url : NSURL! = NSURL.fileURLWithPath(writePath)
-                    removeFile(url)
-                    return url
-                }
-            }
-        }
-        return nil
-    }
 
+        let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .LongStyle
+            dateFormatter.timeStyle = .ShortStyle
+
+        let date = dateFormatter.stringFromDate(NSDate())
+        let writePath = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("movie-\(date).mov")
+
+        removeFile(writePath)
+
+        return writePath
+    }
+    
     func removeFile(url: NSURL) {
-        var filePath : String! = url.path
-        var manager : NSFileManager = NSFileManager.new()
+        let filePath : String! = url.path
+        let manager : NSFileManager = NSFileManager()
+
         if manager.fileExistsAtPath(filePath) {
-            var error : NSErrorPointer = NSErrorPointer()
-            if manager.removeItemAtPath(filePath, error: error) == false {
-                print("================= Remove File \(filePath) failed with \(error) =================")
+    
+            do {
+                try manager.removeItemAtPath(filePath)
+            } catch {
+                print("================= Remove File \(filePath) failed with error \(error) =================")
             }
         }
     }
 
+    func image(image: UIImage, didFinishSavingWithError
+        error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+
+            var title = ""
+            var message = ""
+
+            if error != nil {
+                title = "Error"
+                message = "Failed to save video"
+            } else {
+                title = "Success"
+                message = "Video saved"
+            }
+
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    //Disabled while I figure out wtf is going wrong
+    func videoCompositionInstructionForTrack(track: AVCompositionTrack, asset: AVAsset) -> AVMutableVideoCompositionLayerInstruction {
+
+        let instruction = AVMutableVideoCompositionLayerInstruction(assetTrack: track)
+//        let assetTrack = asset.tracksWithMediaType(AVMediaTypeVideo)[0]
+
+//        let transform = assetTrack.preferredTransform
+        //        let assetInfo = orientationFromTransform(transform)
+        //
+        //        var scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.width
+        //
+        //        if assetInfo.isPortrait {
+        //            scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.height
+        //            let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
+        //            instruction.setTransform(CGAffineTransformConcat(assetTrack.preferredTransform, scaleFactor),
+        //                atTime: kCMTimeZero)
+        //        } else {
+        //            let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
+        //            var concat = CGAffineTransformConcat(CGAffineTransformConcat(assetTrack.preferredTransform, scaleFactor), CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.width / 2))
+        //            if assetInfo.orientation == .Down {
+        //                let fixUpsideDown = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        //                let windowBounds = UIScreen.mainScreen().bounds
+        //                let yFix = assetTrack.naturalSize.height + windowBounds.height
+        //                let centerFix = CGAffineTransformMakeTranslation(assetTrack.naturalSize.width, yFix)
+        //                concat = CGAffineTransformConcat(CGAffineTransformConcat(fixUpsideDown, centerFix), scaleFactor)
+        //            }
+        //            instruction.setTransform(concat, atTime: kCMTimeZero)
+        //        }
+
+        return instruction
+    }
+
+    func orientationFromTransform(transform: CGAffineTransform) -> (orientation: UIImageOrientation, isPortrait: Bool) {
+
+        var assetOrientation = UIImageOrientation.Up
+        var isPortrait = false
+
+        if transform.a == 0 && transform.b == 1.0 && transform.c == -1.0 && transform.d == 0 {
+            assetOrientation = .Right
+            isPortrait = true
+        } else if transform.a == 0 && transform.b == -1.0 && transform.c == 1.0 && transform.d == 0 {
+            assetOrientation = .Left
+            isPortrait = true
+        } else if transform.a == 1.0 && transform.b == 0 && transform.c == 0 && transform.d == 1.0 {
+            assetOrientation = .Up
+        } else if transform.a == -1.0 && transform.b == 0 && transform.c == 0 && transform.d == -1.0 {
+            assetOrientation = .Down
+        }
+        return (assetOrientation, isPortrait)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+
+        navigationItem.backBarButtonItem = backItem
+    }
+
+
+    //Will change boilerplate with data from edited videos
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+
 
 //        if(segue.sourceViewController .isKindOfClass(ViewController2))
 //        {
@@ -501,96 +528,205 @@ class HomeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
 
     }
 
-}
+    func finishError() {
 
-struct Audio {
+        let finishAlert = UIAlertController(title: "Error",
+                                          message: "You must add a video before finishing!",
+                                   preferredStyle: .Alert)
 
-    var csURL : NSURL
-    var asset : AVAsset
-    var audioTrack : AVAssetTrack?
-    var duration : CMTime
-    var title : String = ""
-    var artist : String = ""
-
-    init(url: NSURL) {
-        csURL = url
-        asset = AVAsset.assetWithURL(url) as! AVAsset
-        duration = asset.duration
-
-        var audios = self.asset.tracksWithMediaType(AVMediaTypeAudio)
-
-        if audios.count > 0 {
-            self.audioTrack = audios[0] as? AVAssetTrack
+        let cancelAction = UIAlertAction(title: "OK",
+                                         style: .Cancel) { (action) in
+            // ...
         }
+
+        finishAlert.addAction(cancelAction)
+
+        self.presentViewController(finishAlert, animated: true, completion: nil)
 
     }
+
+    func destroyAlert() {
+
+        let destroyAlert = UIAlertController(title: "Start Over",
+                                           message: "Erase video and start over?",
+                                    preferredStyle: .Alert)
+
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .Cancel) { (action) in
+            // ...
+        }
+
+        let confirmAction = UIAlertAction(title: "Confirm",
+                                          style: .Destructive) { (action) in
+            // ...
+        }
+
+        destroyAlert.addAction(cancelAction)
+        destroyAlert.addAction(confirmAction)
+
+        self.presentViewController(destroyAlert, animated: true, completion: nil)
+
+    }
+
+    func finishSheet() {
+
+        let finishSheet = UIAlertController(title: nil,
+                                          message: nil,
+                                   preferredStyle: .ActionSheet)
+
+        let deleteAction = UIAlertAction(title: "Start Over", style: .Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.destroyAlert()
+            print("Start Over")
+        })
+
+        let galleryAction = UIAlertAction(title: "Save to Gallery", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("File Saved")
+        })
+
+        let facebookAction = UIAlertAction(title: "Post to Facebook", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Posted to Facebook")
+        })
+
+        let instagramAction = UIAlertAction(title: "Post to Instagram", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Posted to Instagram")
+        })
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+
+        finishSheet.addAction(galleryAction)
+        finishSheet.addAction(facebookAction)
+        finishSheet.addAction(instagramAction)
+        finishSheet.addAction(deleteAction)
+        finishSheet.addAction(cancelAction)
+        
+        self.presentViewController(finishSheet, animated: true, completion: nil)
+        
+    }
+
+    //Legacy code for custom audio information
+
+//    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+//
+//        var tmpItem = mediaItemCollection.items[0] as? MPMediaItem
+//        let item : MPMediaItem! = tmpItem!
+//        //Makes sure the item is local and not iCloud
+//        var strCloud = item.valueForProperty(MPMediaItemPropertyIsCloudItem) as! NSNumber.BooleanLiteralType
+//
+//        //            print("\(strCloud)=================================\n")
+//
+//        if tmpItem != nil && !strCloud  {
+//
+//            //Finding path to make the asset
+//            if let itemUrl = item.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
+//                print("================ URL is \(itemUrl) =================\n")
+//                self.audio = Audio(url: itemUrl)
+//                self.audioSet = true
+//                print("================ Title is \((item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!) =================\n")
+//                audio.title = (item!.valueForProperty(MPMediaItemPropertyTitle) as? String)!
+//                print("================ Artist is \((item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!) =================\n")
+//                audio.artist = (item!.valueForProperty(MPMediaItemPropertyArtist) as? String)!
+//                self.audioLabel.text = "\(audio.title) by \(audio.artist)"
+//                mediaPicker.dismissViewControllerAnimated(true, completion: nil)
+//                //                    mergeClip()
+//
+//            } else {
+//                //Error notifying that the song isn't local
+//                let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
+//                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
+//                alert.addAction(cancelAction)
+//                self.presentViewController(alert, animated: true, completion: nil)
+//            }
+//
+//            //Trawling metadata
+//            //                let itemTitle = item!.valueForProperty(MPMediaItemPropertyTitle) as? String
+//            //                let itemArtist = item!.valueForProperty(MPMediaItemPropertyArtist) as? String
+//            //                let itemArtwork = item!.valueForProperty(MPMediaItemPropertyArtwork) as? MPMediaItemArtwork
+//            //                print("Media Title \(itemTitle)\n Media Artist \(itemArtist) \n Media Artwork \(itemArtwork)")
+//
+//        } else {
+//            //Error notifying that the song isn't local
+//            let alert = UIAlertController(title: "Error", message: "Not Valid Audio", preferredStyle: .Alert)
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in self.addAudio()}
+//            alert.addAction(cancelAction)
+//            self.presentViewController(alert, animated: true, completion: nil)
+//        }
+//    }
+//
+//    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
+//        self.dismissViewControllerAnimated(true, completion: {})
+//    }
 }
 
-struct Clip {
+extension HomeVC: UIImagePickerControllerDelegate {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
 
-    var csURL : NSURL
-    var asset : AVAsset
-    var videoTrack : AVAssetTrack?
-    var audioTrack : AVAssetTrack?
-    var orientation : String = ""
-    var thumbnail : CGImage!
-    var duration: CMTime = CMTimeMakeWithSeconds(0, 0) {
-        didSet {
-                //            durationSet = true
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        dismissViewControllerAnimated(true, completion: nil)
+
+        if mediaType == kUTTypeMovie {
+
+            let avAsset = AVAsset(URL: info[UIImagePickerControllerMediaURL] as! NSURL)
+            let message = "Video Successfully Loaded"
+
+            //            if loadingAssetOne {
+            //                message = "Video one loaded"
+            //                firstAsset = avAsset
+            //            } else {
+            //                message = "Video two loaded"
+            //                secondAsset = avAsset
+            //            }
+
+            self.clipArray.append(avAsset)
+
+            let alert = UIAlertController(title: "Asset Loaded", message: message, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+            presentViewController(alert, animated: true, completion: nil)
         }
     }
 
-    init(url: NSURL) {
-        csURL = url
-        asset = AVAsset.assetWithURL(url) as! AVAsset
-        thumbnail = createImage(asset)
-        orientation = detectOrientation(asset)
-        duration = asset.duration
+}
 
-            var tracks = self.asset.tracksWithMediaType(AVMediaTypeVideo)
-            var audios = self.asset.tracksWithMediaType(AVMediaTypeAudio)
+extension HomeVC: UINavigationControllerDelegate {
 
-            if tracks.count > 0 {
-                self.videoTrack = tracks[0] as? AVAssetTrack
-                self.audioTrack = audios[0] as? AVAssetTrack
+}
+
+extension HomeVC: MPMediaPickerControllerDelegate {
+
+    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+
+        let selectedSongs = mediaItemCollection.items
+
+        if selectedSongs.count > 0 {
+            let song = selectedSongs[0]
+            if let url = song.valueForProperty(MPMediaItemPropertyAssetURL) as? NSURL {
+                audioAsset = AVAsset(URL: url)
+                dismissViewControllerAnimated(true, completion: nil)
+                let alert = UIAlertController(title: "Asset Loaded", message: "Audio Loaded", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler:nil))
+                presentViewController(alert, animated: true, completion: nil)
+            } else {
+                dismissViewControllerAnimated(true, completion: nil)
+                let alert = UIAlertController(title: "Asset Not Available", message: "Audio Not Loaded", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler:nil))
+                presentViewController(alert, animated: true, completion: nil)
             }
+        } else {
+            dismissViewControllerAnimated(true, completion: nil)
         }
-
-        private func createImage(asset: AVAsset) -> CGImage {
-            let imageGenerator = AVAssetImageGenerator(asset: asset);
-            let time = CMTimeMakeWithSeconds(1.0, 1)
-            var actualTime : CMTime = CMTimeMake(0, 0)
-            var error : NSError?
-            imageGenerator.appliesPreferredTrackTransform = true
-            return imageGenerator.copyCGImageAtTime(time, actualTime: &actualTime, error: &error)
-        }
-
-        private func detectOrientation(asset: AVAsset) -> String {
-            let tracks : [AnyObject] = asset.tracksWithMediaType(AVMediaTypeVideo)
-            let avTrack : AVAssetTrack = tracks[0] as! AVAssetTrack
-            let avTrackSize = avTrack.naturalSize;
-            var avTrackRect = CGRectMake(0.0, 0.0, avTrackSize.width, avTrackSize.height)
-            avTrackRect = CGRectApplyAffineTransform(avTrackRect, avTrack.preferredTransform);
-
-            var orientation : String = ""
-
-            if (avTrackRect.height > avTrackRect.width) {
-                print("================= Asset Orientation: Portrait ================= \n")
-                orientation = "Portrait"
-            }
-            else if (avTrackRect.height < avTrackRect.width) {
-                print("================= Asset Orientation: Landscape ================= \n")
-                orientation = "Landscape"
-            }
-            else {
-                print("================= Asset Orientation: Square ================= \n")
-                orientation = "Square"
-            }
-            
-            return orientation
-        }
+    }
     
+    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
+
 
 
 

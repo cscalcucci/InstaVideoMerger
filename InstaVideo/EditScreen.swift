@@ -36,14 +36,14 @@ class EditScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var attributes = [
+        let attributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor(),
             NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!
         ]
 
-        var navString = NSMutableAttributedString(string: "EDIT CLIP", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!])
+        let navString = NSMutableAttributedString(string: "EDIT CLIP", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 25)!])
 
-        var navLabel = UILabel()
+        let navLabel = UILabel()
         navLabel.attributedText = navString
         navLabel.sizeToFit()
         self.navigationItem.titleView = navLabel
@@ -85,7 +85,8 @@ class EditScreen: UIViewController {
         self.player = Player()
         self.player.view.frame = playBtn.frame
         self.playBtn.frame = self.movieView.bounds
-        self.player.path = "\(self.selectedClip.csURL)"
+
+        self.player.setUrl(self.selectedClip.csURL)
 
         self.addChildViewController(self.player)
 //        self.movieView.addSubview(self.player.view)

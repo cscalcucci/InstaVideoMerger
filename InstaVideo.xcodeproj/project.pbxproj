@@ -26,6 +26,8 @@
 		66D32DBF1B8BBFEE001421F9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32D801B86CD53001421F9 /* Player.swift */; };
 		66D32DC11B8C46FF001421F9 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D32DC01B8C46FF001421F9 /* libc++abi.dylib */; };
 		66D32DC71B8D3674001421F9 /* UpgradesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D32DC61B8D3674001421F9 /* UpgradesVC.swift */; };
+		83117C9F1BFD58F800E7E932 /* LegacyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83117C9E1BFD58F800E7E932 /* LegacyCode.swift */; };
+		83A713A51BFC02E5009242AE /* AssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A713A41BFC02E5009242AE /* AssetModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		66D32D871B879418001421F9 /* CinemaPlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CinemaPlay.swift; sourceTree = "<group>"; };
 		66D32DC01B8C46FF001421F9 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "usr/lib/libc++abi.dylib"; sourceTree = SDKROOT; };
 		66D32DC61B8D3674001421F9 /* UpgradesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradesVC.swift; sourceTree = "<group>"; };
+		83117C9E1BFD58F800E7E932 /* LegacyCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyCode.swift; sourceTree = "<group>"; };
+		83A713A41BFC02E5009242AE /* AssetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,8 @@
 				66861F4E1B9D522500C36503 /* UIBorders.swift */,
 				6696406C1B7E75BE007C72AA /* AppDelegate.swift */,
 				6696408F1B7E7764007C72AA /* HomeVC.swift */,
+				83117C9E1BFD58F800E7E932 /* LegacyCode.swift */,
+				83A713A41BFC02E5009242AE /* AssetModel.swift */,
 				6628011B1B92C91100DDB109 /* EditScreen.swift */,
 				66D32DC61B8D3674001421F9 /* UpgradesVC.swift */,
 				6628018E1B96C3C300DDB109 /* FreeRange.swift */,
@@ -227,7 +233,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Aphelion;
 				TargetAttributes = {
 					669640661B7E75BE007C72AA = {
@@ -288,8 +294,10 @@
 				6628018F1B96C3C300DDB109 /* FreeRange.swift in Sources */,
 				66D32DC71B8D3674001421F9 /* UpgradesVC.swift in Sources */,
 				669640901B7E7764007C72AA /* HomeVC.swift in Sources */,
+				83117C9F1BFD58F800E7E932 /* LegacyCode.swift in Sources */,
 				6696406D1B7E75BE007C72AA /* AppDelegate.swift in Sources */,
 				669640701B7E75BE007C72AA /* InstaVideo.xcdatamodeld in Sources */,
+				83A713A51BFC02E5009242AE /* AssetModel.swift in Sources */,
 				6628011C1B92C91100DDB109 /* EditScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,6 +361,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -418,6 +427,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InstaVideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -434,6 +444,7 @@
 					SDK,
 					"7.0.0/Flurry-iOS-7.0.0/FlurryAds",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cscal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = InstaVideo/Bridge.h;
 			};
@@ -444,6 +455,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InstaVideo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -460,6 +472,7 @@
 					SDK,
 					"7.0.0/Flurry-iOS-7.0.0/FlurryAds",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "cscal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = InstaVideo/Bridge.h;
 			};
@@ -479,6 +492,7 @@
 				);
 				INFOPLIST_FILE = InstaVideoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "cscal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InstaVideo.app/InstaVideo";
 			};
@@ -494,6 +508,7 @@
 				);
 				INFOPLIST_FILE = InstaVideoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "cscal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InstaVideo.app/InstaVideo";
 			};
